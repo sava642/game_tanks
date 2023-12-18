@@ -1,13 +1,73 @@
-body {
+body, div, h1, h2, h3, p, ul, li {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+body {
+  font-family: 'Verdana', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
+/* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+} */
+.stage-container {
+  height: 100vh; /* 100% высоты видимой области окна браузера */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
+
+.custom-stage {
+  border: 1px solid #000; /* Опционально: рамка для Stage */
+}
+.footer {
+  background-color: brown; /* Цвет футера */
+  height: 17px; 
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+.btn-try-again{
+  font-size: 16px;
+  font-weight: bold;
+  border: 2px solid #fff; /* Белый бордер */
+  border-radius: 10px; /* Border radius 10px */
+  background-color: #232323; /* Цвет фона кнопки */
+  color: #fff; /* Цвет текста */
+  padding: 10px 20px; /* Поля вокруг текста */
+  cursor: pointer;
+  transition: all 0.3s ease-in-out; /* Анимация при наведении */
+}
+.modal-info{
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+

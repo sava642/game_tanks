@@ -1,0 +1,1 @@
+export const selectRunningGameData = (state) => state.game;

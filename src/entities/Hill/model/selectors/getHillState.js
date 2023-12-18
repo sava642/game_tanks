@@ -1,0 +1,1 @@
+export const selectHill = (state) => state.hill.hillShapeRef;
