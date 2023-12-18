@@ -1,0 +1,18 @@
+{
+	"Enter the first player's name": "Введите имя первого игрока",
+	"Enter the second player's name": "Введите имя второго игрока",
+	"Enter angle ": "Введите угол ",
+	"Enter power ": "Введите силу ",
+	"Enter name": "Введите имя",
+	"Start game": "Запустить игру",
+	"RU": "EN",
+	"Welcome to the exciting world of battle tanks! In this exciting two-game battle, you and a friend take on the role of tank commanders, ready to fight in an epic duel.": "Добро пожаловать в захватывающий мир боевых танков! В этой захватывающей двухигровой битве, вы и ваш друг возьмете на себя роль командиров танков, готовых сразиться в эпической дуэли.",
+	"Your task is to accurately control the force and angle of fire to hit the enemy tank and defeat your opponent. The game has an obstacle for bullets in the form of a green hill in the middle of the screen. Your shots must skilfully circle around him to reach the target. Attention, strategy and precision remain the key in this exciting two-player game. Show your skills, develop tactics and become the undisputed champion.": "Ваша задача - метко управлять силой и углом стрельбы, чтобы попасть во вражеский танк и победить соперника.  В игре присутствует препятствие для пуль в виде зеленого холма посередине экрана. Ваши выстрелы должны ловко облетать его, чтобы достичь цели. Внимание, стратегия и точность остаются ключевыми моментами в этой захватывающей игре на двоих. Покажите свои навыки, разработайте тактику и станьте неоспоримым чемпионом.",
+	"Game rules": "Правила игры",
+	"Let's get started and may the best man win!": "Давайте начнем и пусть победит сильнейший!",
+	"You did not enter a name": "Вы не ввели имя",
+	"is going to shoot now": "сейчас будет стрелять",
+	"Fire": "Выстрелить",
+	"wins": "выиграл(а)",
+	"Try again": "Пробовать снова"
+}

@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/game_tanks/static/css/main.d8160322.css",
+    "main.js": "/game_tanks/static/js/main.75f28409.js",
+    "static/js/787.ba475cc0.chunk.js": "/game_tanks/static/js/787.ba475cc0.chunk.js",
+    "index.html": "/game_tanks/index.html",
+    "static/media/getFetch.cjs": "/game_tanks/static/media/getFetch.40f37ddea2378391108f.cjs",
+    "main.d8160322.css.map": "/game_tanks/static/css/main.d8160322.css.map",
+    "main.75f28409.js.map": "/game_tanks/static/js/main.75f28409.js.map",
+    "787.ba475cc0.chunk.js.map": "/game_tanks/static/js/787.ba475cc0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d8160322.css",
+    "static/js/main.75f28409.js"
+  ]
+}

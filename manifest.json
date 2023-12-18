@@ -1,0 +1,15 @@
+{
+  "short_name": "Enter name",
+  "name": "Game",
+  "icons": [
+    {
+      "src": "tank.png",
+      "sizes": "94x94",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
