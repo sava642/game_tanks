@@ -64,13 +64,17 @@ function App() {
   const layerRef = useRef();
   const animationRef = useRef();
   const [activeTank, setActiveTank] = useState("left");
+
+
   const handleButtonClick = () => {
-    handleKeyPress({ key: 'Enter' });
+    handleKeyPress({ key: ' ' });
   };
 
   const handleKeyPress = useCallback(
     (e) => {
-      if (e.key === 'Enter' && !bulletFiredLeft && !bulletFiredRight) {
+      console.log(e.key === ' ')
+      if (e.key === ' ' && !bulletFiredLeft && !bulletFiredRight) {
+
         let angle, power, bulletX, bulletY, tankRect, tankEllipse;
 
         if (activeTank === "left") {
