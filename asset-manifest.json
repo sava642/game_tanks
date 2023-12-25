@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/game_tanks/static/css/main.86f16c3a.css",
-    "main.js": "/game_tanks/static/js/main.825dd6b2.js",
+    "main.css": "/game_tanks/static/css/main.cc1e8a28.css",
+    "main.js": "/game_tanks/static/js/main.beb964e9.js",
     "static/js/787.ba475cc0.chunk.js": "/game_tanks/static/js/787.ba475cc0.chunk.js",
     "index.html": "/game_tanks/index.html",
     "static/media/getFetch.cjs": "/game_tanks/static/media/getFetch.40f37ddea2378391108f.cjs",
-    "main.86f16c3a.css.map": "/game_tanks/static/css/main.86f16c3a.css.map",
-    "main.825dd6b2.js.map": "/game_tanks/static/js/main.825dd6b2.js.map",
+    "main.cc1e8a28.css.map": "/game_tanks/static/css/main.cc1e8a28.css.map",
+    "main.beb964e9.js.map": "/game_tanks/static/js/main.beb964e9.js.map",
     "787.ba475cc0.chunk.js.map": "/game_tanks/static/js/787.ba475cc0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.86f16c3a.css",
-    "static/js/main.825dd6b2.js"
+    "static/css/main.cc1e8a28.css",
+    "static/js/main.beb964e9.js"
   ]
 }
