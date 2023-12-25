@@ -11,7 +11,7 @@ import { Suspense } from 'react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Suspense fallback="">
+  <Suspense fallback="Loading...">
     <Provider store={store}>
       <App />
     </Provider>

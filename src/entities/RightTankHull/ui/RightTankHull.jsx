@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectRightTank } from '../../../features/RightTank';
 import {
 	setRightBulletX, setRightBulletY, setRightInitial_X, setRightInitial_Y, setRightTankRect,
-	setRightTankEllipse
+	setRightTankEllipse, setIsRightTankStopped
 } from '../../../features/RightTank';
 import { tankLeftRectTankRightGeometry } from '../model/getTankRightGeometry';
 import Konva from 'konva';
@@ -29,6 +29,7 @@ const RightTankHull = ({ randomDistanceRight }) => {
 	useEffect(() => {
 		animationRef.current = new Konva.Animation((frame) => {
 			setX((prevX) => prevX - 0.8); // Измените этот параметр на скорость движения
+			dispatch(setIsRightTankStopped(false));
 		});
 		animationRef.current.start();
 
@@ -48,6 +49,7 @@ const RightTankHull = ({ randomDistanceRight }) => {
 			dispatch(setRightInitial_Y(newBulletY));
 			dispatch(setRightTankRect(tankRightRect));
 			dispatch(setRightTankEllipse(tankRightEllipse));
+			dispatch(setIsRightTankStopped(true));
 		}
 	}, [isTankStopped, adjustedAngle, dispatch]);
 

@@ -12,6 +12,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 .stage-container {
   height: 100%; /* 100% высоты видимой области окна браузера */
   display: flex;

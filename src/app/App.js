@@ -17,7 +17,7 @@ import { fireAndAnimateBulletLeft } from './fireAndAnimateBulletLeft';
 import { fireAndAnimateBulletRight } from './fireAndAnimateBulletRight';
 import { TankThatWonModal } from '../entities/TankWhichWon';
 import { useTranslation } from 'react-i18next';
-import { showScreen, startGame, endGame } from "../features/RunningGame";
+import { startGame } from "../features/RunningGame";
 import { isMobile } from 'react-device-detect';
 import GameIntro from '../widgets/GameIntro';
 
@@ -27,20 +27,21 @@ function App() {
   const isGameRunning = useSelector((state) => state.game.isGameRunning);
   const [randomDistanceRight, setRandomDistanceRight] = useState(0);
   const [randomDistanceLeft, setRandomDistanceLeft] = useState(0);
+  const [userInteracted, setUserInteracted] = useState(false);
+  const [isPortrait, setIsPortrait] = useState(window.innerWidth < window.innerHeight);
+  const [isRulesModalOpen, setRulesModalOpen] = useState(false);
 
   useEffect(() => {
-    const minRange = isMobile ? 100 : 200;
+    const minRange = isMobile ? 90 : 200;
     const maxRange = isMobile ? 300 : 400;
     const randomRight = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
     const randomLeft = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
     setRandomDistanceRight(randomRight);
     setRandomDistanceLeft(randomLeft);
   }, []);
-  const [isRulesModalOpen, setRulesModalOpen] = useState(false);
 
-  const toggleRulesModal = () => {
-    setRulesModalOpen(!isRulesModalOpen);
-  };
+
+
 
   const dispatch = useDispatch();
   const {
@@ -49,7 +50,8 @@ function App() {
     powerLeft,
     bulletXLeft,
     bulletYLeft,
-    nameLeftTank
+    nameLeftTank,
+    isLeftTankStopped
   } = useSelector(selectLeftTank);
   const {
     bulletFiredRight,
@@ -57,26 +59,19 @@ function App() {
     powerRight,
     bulletXRight,
     bulletYRight,
-    nameRightTank
+    nameRightTank,
+    isRightTankStopped
   } = useSelector(selectRightTank);
   const { tankRightRect, tankRightEllipse } = useSelector(selectRightTank);
   const { tankLeftRect, tankLeftEllipse } = useSelector(selectLeftTank);
   const layerRef = useRef();
   const animationRef = useRef();
-  const [activeTank, setActiveTank] = useState("left");
+  const [activeTank, setActiveTank] = useState(Math.random() < 0.5 ? "left" : "right");
 
-
-  const handleButtonClick = () => {
-    handleKeyPress({ key: ' ' });
-  };
-
-  const handleKeyPress = useCallback(
-    (e) => {
-      console.log(e.key === ' ')
-      if (e.key === ' ' && !bulletFiredLeft && !bulletFiredRight) {
-
+  const handleButtonClick = useCallback(
+    () => {
+      if (!bulletFiredLeft && !bulletFiredRight) {
         let angle, power, bulletX, bulletY, tankRect, tankEllipse;
-
         if (activeTank === "left") {
           angle = angleLeft;
           power = powerLeft;
@@ -147,8 +142,36 @@ function App() {
       tankLeftEllipse,
     ]
   );
-  const [userInteracted, setUserInteracted] = useState(false);
 
+
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === "ru" ? "en" : "ru")
+  }
+
+  const handleStartButtonClick = () => {
+    dispatch(startGame());
+    setUserInteracted(true);
+  };
+
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPortrait(window.innerWidth < window.innerHeight);
+    };
+
+    const handleOrientationChange = () => {
+      setTimeout(handleResize, 300); // Добавим небольшую задержку, чтобы дать время устройству обновить размеры
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleOrientationChange);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleOrientationChange);
+    };
+  }, []);
   useEffect(() => {
     const battleSound = new Audio('./battle.mp3');
     if (userInteracted) {
@@ -160,19 +183,8 @@ function App() {
     };
   }, [userInteracted]);
 
-  const toggleLanguage = () => {
-    i18n.changeLanguage(i18n.language === "ru" ? "en" : "ru")
-  }
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-    };
-  }, [handleKeyPress]);
-  const handleStartButtonClick = () => {
-    dispatch(startGame());
-    setUserInteracted(true);
+  const toggleRulesModal = () => {
+    setRulesModalOpen(!isRulesModalOpen);
   };
   const formattedNameLeftTank = nameLeftTank ? nameLeftTank.charAt(0).toUpperCase() + nameLeftTank.slice(1) : '';
   const formattedNameRightTank = nameRightTank ? nameRightTank.charAt(0).toUpperCase() + nameRightTank.slice(1) : '';
@@ -180,44 +192,57 @@ function App() {
 
   return (
     <div className="wrapper">
-      <GameIntro
-        isScreenVisible={isScreenVisible}
-        toggleLanguage={toggleLanguage}
-        toggleRulesModal={toggleRulesModal}
-        handleStartButtonClick={handleStartButtonClick}
-        isRulesModalOpen={isRulesModalOpen}
-        t={t}
-      />
-
-      {isGameRunning && (
-        <div>
-          <div className="menu-player1">
-            <p>{formattedNameLeftTank}</p>
-            <InputAngleL />
-            <InputPowerL />
-          </div>
-          <p className="info-active-player">{activeTankName} {t("is going to shoot now")}</p>
-          <button className="btn-fire" onClick={handleButtonClick}
-            tabIndex="0">{t('Fire')}</button>
-          <div className="menu-player2">
-            <p>{formattedNameRightTank}</p>
-            <InputAngleR />
-            <InputPowerR />
-          </div>
-          <div className="stage-container">
-            <Stage className="custom-stage" width={window.innerWidth} height={window.innerHeight}>
-              <Layer ref={layerRef}>
-                <Hill layerRef={layerRef} randomDistanceRight={randomDistanceRight} randomDistanceLeft={randomDistanceLeft} />
-                <LeftTankHull randomDistanceLeft={randomDistanceLeft - 30} />
-                <LeftBullet />
-                <RightTankHull randomDistanceRight={randomDistanceRight - 30} />
-                <RightBullet />
-              </Layer>
-            </Stage>
-          </div>
-          <div className="footer"></div>
-          <TankThatWonModal />
+      {isPortrait ? (
+        <div className="centered-message">
+          <p>Rotate the screen</p>
+          <p>Поверни экран</p>
         </div>
+      ) : (
+        <>
+          <GameIntro
+            isScreenVisible={isScreenVisible}
+            toggleLanguage={toggleLanguage}
+            toggleRulesModal={toggleRulesModal}
+            handleStartButtonClick={handleStartButtonClick}
+            isRulesModalOpen={isRulesModalOpen}
+            t={t}
+          />
+
+          {isGameRunning && (
+            <div>
+              <div className="menu-player1">
+                <p>{formattedNameLeftTank}</p>
+                <InputAngleL />
+                <InputPowerL />
+              </div>
+              <p className="info-active-player">{activeTankName} {t("is going to shoot now")}</p>
+              {isLeftTankStopped && isRightTankStopped &&
+                <button
+                  className="btn-fire"
+                  onClick={handleButtonClick}
+                >{t('Fire')}
+                </button>}
+              <div className="menu-player2">
+                <p>{formattedNameRightTank}</p>
+                <InputAngleR />
+                <InputPowerR />
+              </div>
+              <div className="stage-container">
+                <Stage className="custom-stage" width={window.innerWidth} height={window.innerHeight}>
+                  <Layer ref={layerRef}>
+                    <Hill layerRef={layerRef} randomDistanceRight={randomDistanceRight} randomDistanceLeft={randomDistanceLeft} />
+                    <LeftTankHull randomDistanceLeft={randomDistanceLeft - 30} />
+                    <LeftBullet />
+                    <RightTankHull randomDistanceRight={randomDistanceRight - 30} />
+                    <RightBullet />
+                  </Layer>
+                </Stage>
+              </div>
+              <div className="footer"></div>
+              <TankThatWonModal />
+            </div>
+          )}
+        </>
       )}
     </div>
   );

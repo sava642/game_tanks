@@ -1,4 +1,3 @@
-// GameIntro.js
 import React, { useState } from 'react';
 import Modal from '../shared/Modal';
 import Input from '../shared/Input';
@@ -84,7 +83,6 @@ const GameIntro = ({ isScreenVisible, toggleLanguage, toggleRulesModal, handleSt
 									onChange={handleFirstNameChange}
 									placeholder={t('Enter name')}
 									id="firstNameInput"
-
 								/>
 								{firstNameError && <p style={{ color: 'red' }}>{t('You did not enter a name')}</p>}
 								<button className="btn" onClick={handleSecondModal}>{t('OK')}</button>

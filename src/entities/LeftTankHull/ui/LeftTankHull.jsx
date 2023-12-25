@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Rect, Group, Ellipse, Circle } from 'react-konva';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectLeftTank } from '../../../features/LeftTank';
-import { setLeftBulletX, setLeftBulletY, setLeftInitial_X, setLeftInitial_Y, setLeftTankRect, setLeftTankEllipse } from '../../../features/LeftTank';
+import { setLeftBulletX, setLeftBulletY, setLeftInitial_X, setLeftInitial_Y, setLeftTankRect, setLeftTankEllipse, setIsLeftTankStopped } from '../../../features/LeftTank';
 import { tankLeftRectTankLeftGeometry } from '../model/getTankLeftGeometry';
 import Konva from 'konva';
 
@@ -26,6 +26,7 @@ const LeftTankHull = ({ randomDistanceLeft }) => {
 	useEffect(() => {
 		animationRef.current = new Konva.Animation((frame) => {
 			setX((prevX) => prevX + 0.8); // Измените этот параметр на скорость движения
+			dispatch(setIsLeftTankStopped(false));
 		});
 		animationRef.current.start();
 
@@ -45,6 +46,7 @@ const LeftTankHull = ({ randomDistanceLeft }) => {
 			dispatch(setLeftInitial_Y(newBulletY));
 			dispatch(setLeftTankRect(tankLeftRect));
 			dispatch(setLeftTankEllipse(tankLeftEllipse));
+			dispatch(setIsLeftTankStopped(true));
 		}
 	}, [isTankStopped, adjustedAngle, dispatch]);
 

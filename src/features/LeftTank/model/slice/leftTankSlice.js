@@ -12,6 +12,7 @@ const initialState = {
 	tankLeftEllipse: {},
 	tankLeftWin: false,
 	nameLeftTank: '',
+	isLeftTankStopped: false,
 };
 
 const leftTankSlice = createSlice({
@@ -63,6 +64,9 @@ const leftTankSlice = createSlice({
 		setLeftTankName: (state, action) => {
 			state.nameLeftTank = action.payload;
 		},
+		setIsLeftTankStopped: (state, action) => {
+			state.isLeftTankStopped = action.payload;
+		},
 	},
 });
 
@@ -79,6 +83,7 @@ export const {
 	setLeftTankEllipse,
 	setTankLeftWin,
 	setLeftTankName,
+	setIsLeftTankStopped,
 } = leftTankSlice.actions;
 
 export const leftTankReducer = leftTankSlice.reducer;

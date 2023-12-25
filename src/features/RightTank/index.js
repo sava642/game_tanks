@@ -2,7 +2,7 @@ import { rightTankReducer } from "./model/slice/rightTankSlice";
 import { selectRightTank } from "./model/selectors/getRightTankData";
 import RightTank from "./ui/RightTank";
 import {
-	setRightAngle, setRightPower, setRightBulletX, setRightBulletY, resetRightBullet, setRightInitial_X, setRightInitial_Y, setRightBulletFired, setRightTankRect, setRightTankEllipse, setTankRightWin, setRightTankName
+	setRightAngle, setRightPower, setRightBulletX, setRightBulletY, resetRightBullet, setRightInitial_X, setRightInitial_Y, setRightBulletFired, setRightTankRect, setRightTankEllipse, setTankRightWin, setRightTankName, setIsRightTankStopped
 } from "./model/slice/rightTankSlice";
 export {
 	rightTankReducer,
@@ -19,5 +19,6 @@ export {
 	setRightTankRect,
 	setRightTankEllipse,
 	setTankRightWin,
-	setRightTankName
+	setRightTankName,
+	setIsRightTankStopped
 }

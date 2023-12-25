@@ -1,10 +1,11 @@
 import Konva from 'konva';
 
 export function createExplosion(layerRef, x, y, color) {
-	if (!x || !y) {
+	if (!x || !y || !layerRef.current) {
 		return;
 	}
 
+	// Create the explosion circle
 	const explosionCircle = new Konva.Circle({
 		x: x,
 		y: y,
@@ -12,8 +13,10 @@ export function createExplosion(layerRef, x, y, color) {
 		fill: color,
 	});
 
+	// Add the explosion circle to the layer
 	layerRef.current.add(explosionCircle);
-	layerRef.current.batchDraw(); // Update the layer
+	// Update the layer
+	layerRef.current.batchDraw();
 
 	// Create the explosion animation
 	const explosionAnimation = new Konva.Animation((frame) => {
@@ -22,16 +25,21 @@ export function createExplosion(layerRef, x, y, color) {
 
 		// Update the radius of the explosion circle
 		explosionCircle.radius(newRadius);
-		layerRef.current.batchDraw(); // Update the layer
+		// Update the layer
+		layerRef.current.batchDraw();
 
 		if (newRadius >= 40) {
 			// If the radius reaches the maximum value, stop the animation and remove the explosion
 			explosionAnimation.stop();
-			explosionCircle.destroy(); // Destroy the explosion circle
-			layerRef.current.batchDraw(); // Update the layer
+			// Destroy the explosion circle
+			explosionCircle.destroy();
+			// Update the layer
+			layerRef.current.batchDraw();
 		}
 	});
 
+	// Start the explosion animation
 	explosionAnimation.start();
 }
+
 
