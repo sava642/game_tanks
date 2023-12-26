@@ -18,6 +18,7 @@ const TankThatWonModal = () => {
 	const handleCloseModal = () => {
 		dispatch(setTankLeftWin(false));
 		dispatch(setTankRightWin(false));
+		//localStorage.removeItem('rightTankX');
 		window.location.reload();
 	};
 

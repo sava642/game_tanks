@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, MemoExoticComponent } from 'react';
 import { Rect, Group, Ellipse, Circle } from 'react-konva';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectLeftTank } from '../../../features/LeftTank';
@@ -6,26 +6,34 @@ import { setLeftBulletX, setLeftBulletY, setLeftInitial_X, setLeftInitial_Y, set
 import { tankLeftRectTankLeftGeometry } from '../model/getTankLeftGeometry';
 import Konva from 'konva';
 
-const LeftTankHull = ({ randomDistanceLeft }) => {
-
+const LeftTankHull = React.memo(({ randomDistanceLeft }) => {
 	const [x, setX] = useState(0);
-	const [isTankStopped, setIsTankStopped] = useState(false); // Флаг для определения, остановился ли танк
+	const [isTankStopped, setIsTankStopped] = useState(false);
 	const animationRef = useRef();
-
 	const angle = useSelector(selectLeftTank).angleLeft;
 	const adjustedAngle = isNaN(angle) ? (- 90) : (180 + 90 - angle);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (x >= randomDistanceLeft) {
+		if (x >= randomDistanceLeft && animationRef.current) {
 			animationRef.current.stop();
-			setIsTankStopped(true); // Устанавливаем флаг в true, когда танк остановился
+			setIsTankStopped(true);
+			localStorage.setItem('leftTankX', x);
 		}
+
+
+
+
 	}, [randomDistanceLeft, x]);
 
 	useEffect(() => {
+		const savedX = localStorage.getItem('leftTankX');
+		if (savedX) {
+			setX(parseFloat(savedX)); // Преобразуйте значение обратно в число, если оно было строкой
+		}
+
 		animationRef.current = new Konva.Animation((frame) => {
-			setX((prevX) => prevX + 0.8); // Измените этот параметр на скорость движения
+			setX((prevX) => prevX + 0.8);
 			dispatch(setIsLeftTankStopped(false));
 		});
 		animationRef.current.start();
@@ -114,6 +122,6 @@ const LeftTankHull = ({ randomDistanceLeft }) => {
 			/>
 		</Group>
 	);
-};
+}, (prevProps, nextProps) => prevProps.randomDistanceLeft === nextProps.randomDistanceLeft);
 
 export default LeftTankHull;

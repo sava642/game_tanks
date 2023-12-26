@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import Konva from 'konva';
 
 function Hill({ layerRef, randomDistanceRight, randomDistanceLeft }) {
+	console.log(randomDistanceRight, randomDistanceLeft)
 	const hillShapeRef = useRef(null);
 	const height = window.innerHeight;
 	const width = window.innerWidth;

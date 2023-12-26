@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, memo } from 'react';
 import './App.css';
 import { Stage, Layer } from 'react-konva';
 import { useSelector, useDispatch } from 'react-redux';
@@ -30,17 +30,31 @@ function App() {
   const [userInteracted, setUserInteracted] = useState(false);
   const [isPortrait, setIsPortrait] = useState(window.innerWidth < window.innerHeight);
   const [isRulesModalOpen, setRulesModalOpen] = useState(false);
+  const { tankRightRect, tankRightEllipse } = useSelector(selectRightTank);
+  const { tankLeftRect, tankLeftEllipse } = useSelector(selectLeftTank);
+  const [activeTank, setActiveTank] = useState(Math.random() < 0.5 ? "left" : "right");
+
+  const layerRef = useRef();
+  const animationRef = useRef();
+  function clearLocalStorage() {
+    localStorage.clear();
+  }
+
+  // Регистрируем обработчик события перед выгрузкой страницы
+  window.addEventListener('beforeunload', clearLocalStorage);
 
   useEffect(() => {
-    const minRange = isMobile ? 90 : 200;
-    const maxRange = isMobile ? 300 : 400;
-    const randomRight = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
-    const randomLeft = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
-    setRandomDistanceRight(randomRight);
-    setRandomDistanceLeft(randomLeft);
+
+    if (!randomDistanceRight && !randomDistanceLeft) {
+      const minRange = isMobile ? 90 : 200;
+      const maxRange = isMobile ? 300 : 400;
+      const randomRight = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
+      const randomLeft = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
+      setRandomDistanceRight(randomRight);
+      setRandomDistanceLeft(randomLeft);
+
+    }
   }, []);
-
-
 
 
   const dispatch = useDispatch();
@@ -51,7 +65,8 @@ function App() {
     bulletXLeft,
     bulletYLeft,
     nameLeftTank,
-    isLeftTankStopped
+    isLeftTankStopped,
+    tankLeftWin
   } = useSelector(selectLeftTank);
   const {
     bulletFiredRight,
@@ -60,13 +75,10 @@ function App() {
     bulletXRight,
     bulletYRight,
     nameRightTank,
-    isRightTankStopped
+    isRightTankStopped,
+    tankRightWin
   } = useSelector(selectRightTank);
-  const { tankRightRect, tankRightEllipse } = useSelector(selectRightTank);
-  const { tankLeftRect, tankLeftEllipse } = useSelector(selectLeftTank);
-  const layerRef = useRef();
-  const animationRef = useRef();
-  const [activeTank, setActiveTank] = useState(Math.random() < 0.5 ? "left" : "right");
+
 
   const handleButtonClick = useCallback(
     () => {
@@ -143,7 +155,6 @@ function App() {
     ]
   );
 
-
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === "ru" ? "en" : "ru")
   }
@@ -152,8 +163,6 @@ function App() {
     dispatch(startGame());
     setUserInteracted(true);
   };
-
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -166,7 +175,7 @@ function App() {
 
     window.addEventListener('resize', handleResize);
     window.addEventListener('orientationchange', handleOrientationChange);
-
+    console.log("second")
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('orientationchange', handleOrientationChange);
@@ -177,6 +186,7 @@ function App() {
     if (userInteracted) {
       battleSound.play();
     }
+    console.log("third")
     return () => {
       battleSound.pause();
       battleSound.currentTime = 0;
@@ -186,6 +196,7 @@ function App() {
   const toggleRulesModal = () => {
     setRulesModalOpen(!isRulesModalOpen);
   };
+
   const formattedNameLeftTank = nameLeftTank ? nameLeftTank.charAt(0).toUpperCase() + nameLeftTank.slice(1) : '';
   const formattedNameRightTank = nameRightTank ? nameRightTank.charAt(0).toUpperCase() + nameRightTank.slice(1) : '';
   const activeTankName = activeTank === "left" ? formattedNameLeftTank : formattedNameRightTank;
@@ -216,7 +227,7 @@ function App() {
                 <InputPowerL />
               </div>
               <p className="info-active-player">{activeTankName} {t("is going to shoot now")}</p>
-              {isLeftTankStopped && isRightTankStopped &&
+              {isLeftTankStopped && isRightTankStopped && !tankLeftWin && !tankRightWin &&
                 <button
                   className="btn-fire"
                   onClick={handleButtonClick}
@@ -247,5 +258,5 @@ function App() {
     </div>
   );
 }
-export default App;
+export default memo(App);
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { Rect, Group, Ellipse, Circle } from 'react-konva';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectRightTank } from '../../../features/RightTank';
@@ -9,10 +9,10 @@ import {
 import { tankLeftRectTankRightGeometry } from '../model/getTankRightGeometry';
 import Konva from 'konva';
 
-const RightTankHull = ({ randomDistanceRight }) => {
+const RightTankHull = React.memo(({ randomDistanceRight }) => {
 
 	const [x, setX] = useState(window.innerWidth);
-	const [isTankStopped, setIsTankStopped] = useState(false); // Флаг для определения, остановился ли танк
+	const [isTankStopped, setIsTankStopped] = useState(false);
 	const animationRef = useRef();
 
 	const angle = useSelector(selectRightTank).angleRight;
@@ -20,15 +20,21 @@ const RightTankHull = ({ randomDistanceRight }) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (x <= window.innerWidth - randomDistanceRight) {
+		if (x <= window.innerWidth - randomDistanceRight && animationRef.current) {
 			animationRef.current.stop();
-			setIsTankStopped(true); // Устанавливаем флаг в true, когда танк остановился
+			setIsTankStopped(true);
+			localStorage.setItem('rightTankX', x);
 		}
 	}, [randomDistanceRight, x]);
 
 	useEffect(() => {
+		const savedX = localStorage.getItem('rightTankX');
+		if (savedX) {
+			setX(parseFloat(savedX)); // Преобразуйте значение обратно в число, если оно было строкой
+		}
+
 		animationRef.current = new Konva.Animation((frame) => {
-			setX((prevX) => prevX - 0.8); // Измените этот параметр на скорость движения
+			setX((prevX) => prevX - 0.8);
 			dispatch(setIsRightTankStopped(false));
 		});
 		animationRef.current.start();
@@ -120,6 +126,8 @@ const RightTankHull = ({ randomDistanceRight }) => {
 			/>
 		</Group>
 	);
-};
+}, (prevProps, nextProps) =>
+	(prevProps, nextProps) => prevProps.memoizedRandomDistanceRight === nextProps.memoizedRandomDistanceRight);
+
 
 export default RightTankHull;
