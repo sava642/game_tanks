@@ -1,4 +1,3 @@
-// hillSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const hillSlice = createSlice({

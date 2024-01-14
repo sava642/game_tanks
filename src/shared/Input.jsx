@@ -15,7 +15,6 @@ const Input = ({ children, type, value, onChange, min, max, id, placeholder }) =
 				style={{ height: "30px" }}
 			/>
 		</label>
-
 	);
 };
 

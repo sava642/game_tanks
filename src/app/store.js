@@ -4,7 +4,6 @@ import { rightTankReducer } from '../features/RightTank';
 import { hillSliceReducer } from '../entities/Hill/model/slice/hillSlice';
 import { runningGameSliceReducer } from '../features/RunningGame';
 
-
 const store = configureStore({
 	reducer: {
 		leftTank: leftTankReducer,

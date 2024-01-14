@@ -4,7 +4,6 @@ import { setLeftBulletFired, setLeftBulletX, setLeftBulletY, resetLeftBullet, se
 import { setTankRightWin } from '../features/RightTank';
 
 export const fireAndAnimateBulletLeft = (dispatch, layerRef, animationRef, angle, power, bulletX, bulletY, tankRightRect, tankRightEllipse, tankLeftRect, tankLeftEllipse) => {
-
 	const explosionSound = new Audio('./explosion.mp3');
 	const shootSound = new Audio('./shoot.mp3');
 	shootSound.play()
@@ -20,20 +19,16 @@ export const fireAndAnimateBulletLeft = (dispatch, layerRef, animationRef, angle
 		const time = frame.time / 1000;
 		const speedX = power * Math.cos(angleInRadians);
 		const speedY = power * Math.sin(angleInRadians) - gravity * time;
-		//const speedY = Math.max(0, power * Math.sin(angleInRadians) - gravity * time);
-
 		const newBulletX = bulletX + speedX * time;
 		const newBulletY = bulletY - speedY * time + (1 / 2) * gravity * time * time;
 		const checkCollision = (x, y, hillShape, tankRightRect, tankRightEllipse, tankLeftRect, tankLeftEllipse) => {
-			// Формируем прямоугольник для пули
 			const bulletRect = {
 				x,
 				y,
-				width: 1, // Ширина пули (можете уточнить размер)
-				height: 1, // Высота пули (можете уточнить размер)
+				width: 1,
+				height: 1,
 			};
 
-			// Проверяем столкновение с прямоугольником правого танка
 			const isBulletInRightTankRect = (
 				bulletRect.x < tankRightRect.x + tankRightRect.width &&
 				bulletRect.x + bulletRect.width > tankRightRect.x &&
@@ -41,7 +36,6 @@ export const fireAndAnimateBulletLeft = (dispatch, layerRef, animationRef, angle
 				bulletRect.y + bulletRect.height > tankRightRect.y
 			);
 
-			// Проверяем столкновение с башней правого танка
 			const isBulletInRightTankTower = (
 				bulletRect.x < tankRightEllipse.x + tankRightEllipse.radiusX &&
 				bulletRect.x + bulletRect.width > tankRightEllipse.x - tankRightEllipse.radiusX &&
@@ -49,7 +43,6 @@ export const fireAndAnimateBulletLeft = (dispatch, layerRef, animationRef, angle
 				bulletRect.y + bulletRect.height > tankRightEllipse.y - tankRightEllipse.radiusY
 			);
 
-			// Проверяем столкновение с прямоугольником левого танка
 			const isBulletInLeftTankRect = (
 				bulletRect.x < tankLeftRect.x + tankLeftRect.width &&
 				bulletRect.x + bulletRect.width > tankLeftRect.x &&
@@ -57,7 +50,6 @@ export const fireAndAnimateBulletLeft = (dispatch, layerRef, animationRef, angle
 				bulletRect.y + bulletRect.height > tankLeftRect.y
 			);
 
-			// Проверяем столкновение с башней левого танка
 			const isBulletInLeftTankTower = (
 				bulletRect.x < tankLeftEllipse.x + tankLeftEllipse.radiusX &&
 				bulletRect.x + bulletRect.width > tankLeftEllipse.x - tankLeftEllipse.radiusX &&
@@ -65,7 +57,6 @@ export const fireAndAnimateBulletLeft = (dispatch, layerRef, animationRef, angle
 				bulletRect.y + bulletRect.height > tankLeftEllipse.y - tankLeftEllipse.radiusY
 			);
 
-			// Проверяем столкновение с холмом
 			const isBulletInHill = hillShape.intersects({
 				x,
 				y,
@@ -76,10 +67,8 @@ export const fireAndAnimateBulletLeft = (dispatch, layerRef, animationRef, angle
 			if (isBulletInLeftTankTower || isBulletInLeftTankRect) {
 				dispatch(setTankRightWin(true))
 			}
-
 			return isBulletInRightTankRect || isBulletInRightTankTower || isBulletInLeftTankRect || isBulletInLeftTankTower || isBulletInHill;
 		};
-
 
 		const hillShape = layerRef.current?.children.find(child => child.name() === "hillShape");
 
@@ -103,7 +92,6 @@ export const fireAndAnimateBulletLeft = (dispatch, layerRef, animationRef, angle
 			dispatch(setLeftBulletY(newBulletY));
 		}
 	}, layerRef.current);
-
 	animationRef.current = newAnimation;
 	newAnimation.start();
 };

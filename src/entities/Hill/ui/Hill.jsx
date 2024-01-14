@@ -2,18 +2,16 @@ import { useEffect, useRef } from 'react';
 import Konva from 'konva';
 
 function Hill({ layerRef, randomDistanceRight, randomDistanceLeft }) {
-	console.log(randomDistanceRight, randomDistanceLeft)
+
 	const hillShapeRef = useRef(null);
 	const height = window.innerHeight;
 	const width = window.innerWidth;
 
 	useEffect(() => {
 		function tankLeftRectRandomHeightPercentage() {
-			return Math.floor(Math.random() * (90 - 85 + 1)) + 85; // Пример: случайное число от 15% до 20%
+			return Math.floor(Math.random() * (90 - 85 + 1)) + 85;
 		}
-
 		const randomHeightPercentage = tankLeftRectRandomHeightPercentage();
-
 		const createHillShape = () => {
 			const hillShape = new Konva.Shape({
 				name: 'hillShape',

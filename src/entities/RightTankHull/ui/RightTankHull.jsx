@@ -30,7 +30,7 @@ const RightTankHull = React.memo(({ randomDistanceRight }) => {
 	useEffect(() => {
 		const savedX = localStorage.getItem('rightTankX');
 		if (savedX) {
-			setX(parseFloat(savedX)); // Преобразуйте значение обратно в число, если оно было строкой
+			setX(parseFloat(savedX));
 		}
 
 		animationRef.current = new Konva.Animation((frame) => {
@@ -59,7 +59,6 @@ const RightTankHull = React.memo(({ randomDistanceRight }) => {
 		}
 	}, [isTankStopped, adjustedAngle, dispatch]);
 
-
 	const gunLength = 40;
 	const gunWidth = 5;
 	const towerWidth = 50;
@@ -69,7 +68,6 @@ const RightTankHull = React.memo(({ randomDistanceRight }) => {
 	const wheelDiameter = 16;
 	const wheelDistance = 0;
 	const y = window.innerHeight - 50
-
 
 	const calculateNewBulletX = (adjustedAngle) => {
 		const gunEndX = x - gunWidth / 2;
@@ -83,20 +81,16 @@ const RightTankHull = React.memo(({ randomDistanceRight }) => {
 
 	return (
 		<Group>
-			{/* Основание дула (правая сторона) */}
 			<Rect x={x - gunWidth / 2} y={y - gunWidth / 2} width={gunWidth} height={gunWidth} fill="gray" />
-			{/* Дуло танка */}
 			<Rect x={x - gunWidth / 2} y={y} width={gunWidth} height={gunLength} fill="gray" rotation={adjustedAngle} />
-			{/* Башня танка */}
 			<Ellipse
-				x={x + gunWidth / 2 + 10} // начало башни находится в конце дула (правая сторона)
+				x={x + gunWidth / 2 + 10}
 				y={y + 2}
 				radiusX={towerWidth / 2}
 				radiusY={towerHeight / 2}
 				fill="gray"
 			/>
 
-			{/* Колеса */}
 			{Array.from({ length: 5 }).map((_, index) => (
 				<Group key={index}>
 					<Ellipse
@@ -106,7 +100,6 @@ const RightTankHull = React.memo(({ randomDistanceRight }) => {
 						radiusY={wheelDiameter / 2}
 						fill="#444"
 					/>
-					{/* Точка в середине колеса */}
 					<Circle
 						x={x + gunWidth / 2 + 18 - rectangleWidth / 2 + index * (wheelDiameter - wheelDistance)}
 						y={y + towerHeight + wheelDiameter / 2 - 2}
@@ -115,7 +108,6 @@ const RightTankHull = React.memo(({ randomDistanceRight }) => {
 					/>
 				</Group>
 			))}
-			{/* Прямоугольник под башней */}
 			<Rect
 				x={x + gunWidth / 2 + 10 - rectangleWidth / 2}
 				y={y + towerHeight / 2}
@@ -126,8 +118,7 @@ const RightTankHull = React.memo(({ randomDistanceRight }) => {
 			/>
 		</Group>
 	);
-}, (prevProps, nextProps) =>
-	(prevProps, nextProps) => prevProps.memoizedRandomDistanceRight === nextProps.memoizedRandomDistanceRight);
+}, (prevProps, nextProps) => prevProps.memoizedRandomDistanceRight === nextProps.memoizedRandomDistanceRight);
 
 
 export default RightTankHull;

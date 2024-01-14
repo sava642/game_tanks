@@ -14,7 +14,7 @@ body {
 
 
 .stage-container {
-  height: 100%; /* 100% высоты видимой области окна браузера */
+  height: 100%; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +23,7 @@ body {
 }
 
 .footer {
-  background-color: brown; /* Цвет футера */
+  background-color: brown;
   height: 17px; 
   width: 100%;
   position: fixed;
@@ -50,13 +50,13 @@ body {
 .btn-try-again{
   font-size: 16px;
   font-weight: bold;
-  border: 2px solid #fff; /* Белый бордер */
-  border-radius: 10px; /* Border radius 10px */
-  background-color: #232323; /* Цвет фона кнопки */
-  color: #fff; /* Цвет текста */
-  padding: 10px 20px; /* Поля вокруг текста */
+  border: 2px solid #fff; 
+  border-radius: 10px; 
+  background-color: #232323; 
+  color: #fff; 
+  padding: 10px 20px; 
   cursor: pointer;
-  transition: all 0.3s ease-in-out; /* Анимация при наведении */
+  transition: all 0.3s ease-in-out; 
 }
 .modal-info{
   display:flex;

@@ -10,8 +10,6 @@ import { Hill } from '../../../entities/Hill';
 import { createExplosion } from '../../../entities/createExplotion';
 import { LeftTankHull } from '../../../entities/LeftTankHull';
 
-
-
 function LeftTank() {
 	const leftTankData = useSelector(selectLeftTank);
 	const dispatch = useDispatch();
@@ -20,7 +18,6 @@ function LeftTank() {
 	const power = leftTankData.power;
 	const bulletX = leftTankData.bulletX;
 	const bulletY = leftTankData.bulletY;
-
 	const layerRef = useRef();
 	const animationRef = useRef();
 	const height = window.innerHeight;
@@ -69,8 +66,6 @@ function LeftTank() {
 			const hillShape = layerRef.current?.children.find(child => child.name() === "hillShape");
 
 			if (checkCollision(newBulletX, newBulletY, hillShape)) {
-
-				console.log('Столкновение');
 				createExplosion(layerRef, newBulletX, newBulletY)
 				animationRef.current.stop();
 				dispatch(setLeftBulletFired(false));
@@ -103,5 +98,5 @@ function LeftTank() {
 			</Stage>
 		</div>
 	);
-}
+};
 export default LeftTank;

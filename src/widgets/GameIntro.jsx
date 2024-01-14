@@ -11,19 +11,17 @@ const GameIntro = ({ isScreenVisible, toggleLanguage, toggleRulesModal, handleSt
 	const nameRightTank = useSelector(selectRightTank).nameRightTank;
 	const [isFirstNameModalOpen, setFirstNameModalOpen] = useState(false);
 	const [isSecondNameModalOpen, setSecondNameModalOpen] = useState(false);
-
-
 	const [firstNameError, setFirstNameError] = useState(false);
 	const [secondNameError, setSecondNameError] = useState(false);
 
 	const handleFirstNameChange = (event) => {
 		dispatch(setLeftTankName(event.target.value));
-		setFirstNameError(false); // Сброс ошибки при изменении имени
+		setFirstNameError(false);
 	};
 
 	const handleSecondNameChange = (event) => {
 		dispatch(setRightTankName(event.target.value));
-		setSecondNameError(false); // Сброс ошибки при изменении имени
+		setSecondNameError(false);
 	};
 
 	const handleFirstModal = () => {
@@ -32,7 +30,7 @@ const GameIntro = ({ isScreenVisible, toggleLanguage, toggleRulesModal, handleSt
 
 	const handleSecondModal = () => {
 		if (!nameLeftTank) {
-			setFirstNameError(true); // Показать ошибку, если имя не введено
+			setFirstNameError(true);
 		} else {
 			setFirstNameModalOpen(false);
 			setSecondNameModalOpen(true);
@@ -41,7 +39,7 @@ const GameIntro = ({ isScreenVisible, toggleLanguage, toggleRulesModal, handleSt
 
 	const handleStartButtonClickInternal = () => {
 		if (!nameRightTank) {
-			setSecondNameError(true); // Показать ошибку, если имя не введено
+			setSecondNameError(true);
 		} else {
 			handleStartButtonClick();
 		}

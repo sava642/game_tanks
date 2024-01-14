@@ -33,18 +33,15 @@ function App() {
   const { tankRightRect, tankRightEllipse } = useSelector(selectRightTank);
   const { tankLeftRect, tankLeftEllipse } = useSelector(selectLeftTank);
   const [activeTank, setActiveTank] = useState(Math.random() < 0.5 ? "left" : "right");
-
   const layerRef = useRef();
   const animationRef = useRef();
   function clearLocalStorage() {
     localStorage.clear();
   }
 
-  // Регистрируем обработчик события перед выгрузкой страницы
   window.addEventListener('beforeunload', clearLocalStorage);
 
   useEffect(() => {
-
     if (!randomDistanceRight && !randomDistanceLeft) {
       const minRange = isMobile ? 90 : 200;
       const maxRange = isMobile ? 300 : 400;
@@ -52,10 +49,8 @@ function App() {
       const randomLeft = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
       setRandomDistanceRight(randomRight);
       setRandomDistanceLeft(randomLeft);
-
     }
   }, []);
-
 
   const dispatch = useDispatch();
   const {
@@ -79,7 +74,6 @@ function App() {
     tankRightWin
   } = useSelector(selectRightTank);
 
-
   const handleButtonClick = useCallback(
     () => {
       if (!bulletFiredLeft && !bulletFiredRight) {
@@ -99,7 +93,6 @@ function App() {
           tankRect = tankLeftRect;
           tankEllipse = tankLeftEllipse;
         }
-
         if (
           isNaN(angle) ||
           isNaN(power) ||
@@ -154,25 +147,20 @@ function App() {
       tankLeftEllipse,
     ]
   );
-
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === "ru" ? "en" : "ru")
   }
-
   const handleStartButtonClick = () => {
     dispatch(startGame());
     setUserInteracted(true);
   };
-
   useEffect(() => {
     const handleResize = () => {
       setIsPortrait(window.innerWidth < window.innerHeight);
     };
-
     const handleOrientationChange = () => {
-      setTimeout(handleResize, 300); // Добавим небольшую задержку, чтобы дать время устройству обновить размеры
+      setTimeout(handleResize, 300);
     };
-
     window.addEventListener('resize', handleResize);
     window.addEventListener('orientationchange', handleOrientationChange);
     console.log("second")
@@ -186,7 +174,6 @@ function App() {
     if (userInteracted) {
       battleSound.play();
     }
-    console.log("third")
     return () => {
       battleSound.pause();
       battleSound.currentTime = 0;
@@ -218,7 +205,6 @@ function App() {
             isRulesModalOpen={isRulesModalOpen}
             t={t}
           />
-
           {isGameRunning && (
             <div>
               <div className="menu-player1">

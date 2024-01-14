@@ -1,4 +1,3 @@
-// features/LeftTank/components/LeftTankPage.js
 import React from 'react';
 import Modal from '../../../shared/Modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +17,6 @@ const TankThatWonModal = () => {
 	const handleCloseModal = () => {
 		dispatch(setTankLeftWin(false));
 		dispatch(setTankRightWin(false));
-		//localStorage.removeItem('rightTankX');
 		window.location.reload();
 	};
 

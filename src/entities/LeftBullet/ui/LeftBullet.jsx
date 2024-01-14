@@ -5,7 +5,6 @@ import { selectLeftTank } from '../../../features/LeftTank';
 
 const LeftBullet = () => {
 	const leftTankData = useSelector(selectLeftTank);
-
 	const bulletX = leftTankData.bulletXLeft;
 	const bulletY = leftTankData.bulletYLeft;
 	const bulletFired = leftTankData.bulletFiredLeft;
@@ -19,7 +18,7 @@ const LeftBullet = () => {
 						y={bulletY}
 						width={10}
 						height={10}
-						fill="red" // Цвет снаряда
+						fill="red"
 					/>
 				)
 			}

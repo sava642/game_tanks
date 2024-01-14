@@ -9,7 +9,6 @@ const InputPowerR = () => {
 	const { t } = useTranslation()
 	const minValue = 0;
 	const maxValue = 1000;
-
 	const power = useSelector(selectRightTank).powerRight;
 	const dispatch = useDispatch();
 

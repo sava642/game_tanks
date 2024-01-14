@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, MemoExoticComponent } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Rect, Group, Ellipse, Circle } from 'react-konva';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectLeftTank } from '../../../features/LeftTank';
@@ -20,18 +20,13 @@ const LeftTankHull = React.memo(({ randomDistanceLeft }) => {
 			setIsTankStopped(true);
 			localStorage.setItem('leftTankX', x);
 		}
-
-
-
-
 	}, [randomDistanceLeft, x]);
 
 	useEffect(() => {
 		const savedX = localStorage.getItem('leftTankX');
 		if (savedX) {
-			setX(parseFloat(savedX)); // Преобразуйте значение обратно в число, если оно было строкой
+			setX(parseFloat(savedX));
 		}
-
 		animationRef.current = new Konva.Animation((frame) => {
 			setX((prevX) => prevX + 0.8);
 			dispatch(setIsLeftTankStopped(false));
@@ -66,7 +61,6 @@ const LeftTankHull = React.memo(({ randomDistanceLeft }) => {
 	const rectangleHeight = 10;
 	const wheelDiameter = 16;
 	const wheelDistance = 0;
-	//const x = 150;
 	const y = window.innerHeight - 50
 
 	const calculateNewBulletX = (adjustedAngle) => {
@@ -81,18 +75,14 @@ const LeftTankHull = React.memo(({ randomDistanceLeft }) => {
 
 	return (
 		<Group>
-			{/* Дуло танка */}
 			<Rect x={x - gunWidth / 2} y={y + 2.5} width={gunWidth} height={gunLength} fill="gray" rotation={adjustedAngle} />
-			{/* Башня танка */}
 			<Ellipse
-				x={x - gunWidth / 2 - 10} // начало башни находится в конце дула (левая сторона)
+				x={x - gunWidth / 2 - 10}
 				y={y + 2}
 				radiusX={towerWidth / 2}
 				radiusY={towerHeight / 2}
 				fill="gray"
 			/>
-
-			{/* Колеса */}
 			{Array.from({ length: 5 }).map((_, index) => (
 				<Group key={index}>
 					<Ellipse
@@ -102,7 +92,6 @@ const LeftTankHull = React.memo(({ randomDistanceLeft }) => {
 						radiusY={wheelDiameter / 2}
 						fill="#444"
 					/>
-					{/* Точка в середине колеса */}
 					<Circle
 						x={x - gunWidth / 2 - 18 + rectangleWidth / 2 - index * (wheelDiameter - wheelDistance)}
 						y={y + towerHeight + wheelDiameter / 2 - 2}
@@ -111,7 +100,6 @@ const LeftTankHull = React.memo(({ randomDistanceLeft }) => {
 					/>
 				</Group>
 			))}
-			{/* Прямоугольник под башней */}
 			<Rect
 				x={x - gunWidth / 2 - 10 - rectangleWidth / 2}
 				y={y + towerHeight / 2}

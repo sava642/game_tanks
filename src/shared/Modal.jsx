@@ -21,8 +21,6 @@ const Modal = ({ children, onClose }) => {
 		boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
 	};
 
-
-
 	return (
 		<div style={modalOverlayStyles} onClick={onClose}>
 			<div style={modalContentStyles} onClick={(e) => e.stopPropagation()}>

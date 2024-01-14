@@ -4,9 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectLeftTank, setLeftAngle } from '../../../features/LeftTank';
 import { useTranslation } from 'react-i18next';
 
-
-
-
 const InputAngleL = () => {
 	const { t } = useTranslation()
 	const angle = useSelector(selectLeftTank).angleLeft;
@@ -18,7 +15,6 @@ const InputAngleL = () => {
 		if (newAngle > 90 || newAngle < 0) return
 
 		dispatch(setLeftAngle(newAngle));
-
 	};
 
 	return (

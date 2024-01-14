@@ -18,7 +18,7 @@ function RightTank() {
 	const bulletX = rightTankData.bulletX;
 	const bulletY = rightTankData.bulletY;
 
-	const stageRef = useRef();  // Используем отдельный ref для Stage
+	const stageRef = useRef();
 	const layerRef = useRef();
 	const animationRef = useRef();
 	const height = window.innerHeight;
